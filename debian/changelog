@@ -1,0 +1,106 @@
+pyasn1 (0.0.11a-1ubuntu1) precise; urgency=low
+
+  * Build using dh_python2
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 17 Dec 2011 13:36:05 +0000
+
+pyasn1 (0.0.11a-1) unstable; urgency=low
+
+  * New upstream release (Closes: #579556).
+  * Bumped Standard version to 3.8.4 (No changes).
+  * debian/control:
+    + Added myself to Uploaders.
+    + Added ${misc:Depends}.
+    + Aemoved python-dev and added python.
+  * debian/copyright
+    + Added debian's copyright information.
+    + Formated and updated copy information.
+  * Added debian/python-pyasn1.doc-base.
+  * debian/source:
+    + Switch to dpkg-source 3.0 (quilt) format.
+   
+  [Arnaud Fontaine] 
+  * debian/control:
+     + Remove myself from Maintainer as Jan Lübbe is now the maintainer.
+
+ -- Deepak Tripathi <apenguinlinux@gmail.com>  Fri, 14 May 2010 16:30:27 -0400
+
+pyasn1 (0.0.8a-1) unstable; urgency=low
+
+  [ Arnaud Fontaine ]
+  * New upstream release.
+  * New email address.
+  * Remove useless debian/control.in.
+  * debian/control:
+    + Update Standards-Version to 3.7.3. No changes needed.
+  
+  [ Piotr Ożarowski ]
+  * debian/control:
+    + Add Vcs-Browser and Homepage fields.
+    + Rename XS-Vcs-Svn field to Vcs-Svn.
+
+  [ Sandro Tosi ]
+  * debian/control:
+    - Uniformise Vcs-Browser field.
+  * debian/control
+    - switch Vcs-Browser field to viewsvn
+
+ -- Arnaud Fontaine <arnau@debian.org>  Thu, 29 May 2008 22:05:33 +0200
+
+pyasn1 (0.0.7a-1) unstable; urgency=low
+
+  * New upstream release
+  * Update my maintainer address
+
+ -- Jan Luebbe <jluebbe@debian.org>  Sun, 26 Aug 2007 13:26:31 +0200
+
+pyasn1 (0.0.6a-1) unstable; urgency=low
+
+  [ Arnaud Fontaine ]
+  * New upstream release.
+  * Add egg support.
+
+  [ Piotr Ozarowski ]
+  * Added XS-Vcs-Svn field
+
+ -- Arnaud Fontaine <arnaud@andesi.org>  Mon, 16 Apr 2007 17:56:28 +0200
+
+pyasn1 (0.0.5a-2) unstable; urgency=low
+
+  * New Python policy changes. Closes: #373484.
+    + debian/compat:
+      - Update debhelper compatibility to 5.
+    + debian/rules:
+      - Add DEB_PYTHON_SYSTEM=pysupport.
+    + debian/control.in
+      - Clean Build-Depends and Depends, cdbs handles that 
+        automatically now.
+      - XB-Python-Version and Provides for binary package.
+    + debian/postinst && debian/prerm:
+      - Remove "hand made" python-support stuff, cdbs does this.
+
+ -- Arnaud Fontaine <arnaud@andesi.org>  Mon, 19 Jun 2006 23:51:44 +0200
+
+pyasn1 (0.0.5a-1) unstable; urgency=low
+
+  * New upstream release.
+  * Bumped Standards-Version to 3.7.2.
+  * Add debian/source.lintian-overrides for Build-Depends warnings
+    concerning python-support
+  * Update python-support to 0.2.1 in debian/control* and
+    debian/rules.
+
+ -- Arnaud Fontaine <arnaud@andesi.org>  Thu,  1 Jun 2006 16:41:11 +0200
+
+pyasn1 (0.0.4a-2) unstable; urgency=low
+
+  * Move Build-Depends-Indep to Build-Depends according 
+    to the debian policy.
+
+ -- Arnaud Fontaine <arnaud@andesi.org>  Sat, 22 Apr 2006 19:22:53 +0200
+
+pyasn1 (0.0.4a-1) unstable; urgency=low
+
+  * Initial release. Closes: #364204.
+
+ -- Arnaud Fontaine <arnaud@andesi.org>  Fri, 22 Apr 2006 08:22:12 +0200

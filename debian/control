@@ -1,0 +1,23 @@
+Source: pyasn1
+Section: python
+Priority: optional
+Maintainer: Jan Lübbe <jluebbe@debian.org>
+Uploaders: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>,
+           Deepak Tripathi <apenguinlinux@gmail.com>
+Standards-Version: 3.8.4
+Build-Depends: debhelper (>= 5.0.37.2),
+               cdbs (>= 0.4.42),
+               python (>= 2.6.6-3~),
+Build-Depends-Indep: python-setuptools (>= 0.6b3)
+Homepage: http://pyasn1.sourceforge.net/
+Vcs-Svn: svn://svn.debian.org/python-modules/packages/pyasn1/trunk/
+Vcs-Browser: http://svn.debian.org/viewsvn/python-modules/packages/pyasn1/trunk/
+
+Package: python-pyasn1
+Architecture: all
+Depends: ${python:Depends}, ${misc:Depends}
+Description: ASN.1 library for Python
+ This  is  an implementation  of  ASN.1  types  and codecs  in  Python
+ programming language. It has been first written to support particular
+ protocol (SNMP) but then generalized  to be suitable for a wide range
+ of protocols based on ASN.1 specification.
