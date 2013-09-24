@@ -1,8 +1,45 @@
-pyasn1 (0.0.11a-1ubuntu1) precise; urgency=low
+pyasn1 (0.1.7-1) unstable; urgency=low
 
-  * Build using dh_python2
+  [ Vincent Bernat ]
+  * New upstream release.
+  * Bump Standards-Version to 3.9.4.
+  * Examples are not provided any more. Ship more documentation instead.
+  * Add python3-pyasn1 package for Python 3 support.
+  * Update debian/copyright to reflect licensing change.
 
- -- Matthias Klose <doko@ubuntu.com>  Sat, 17 Dec 2011 13:36:05 +0000
+  [ Jakub Wilk ]
+  * Use canonical URIs for Vcs-* fields.
+
+  [ Yaroslav Halchenko ]
+  * Team upload
+  * New upstream release (Closes: #691421)
+  * debian/rules:
+    - run tests (test/suite.py) upon build
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 24 Sep 2013 09:28:33 +0200
+
+pyasn1 (0.1.3-1) unstable; urgency=low
+
+  * Team upload.
+
+  [ Deepak Tripathi ]
+  * debian/watch
+    + updated source to sf.net redirector.
+
+  [Arnaud Fontaine]
+  * New upstream release. Closes: #651686.
+    + PyASN1 manual has been renamed, thus update doc-base.
+  * Fix FTBFS if built twice by adding debian/source/options to ignore
+    changes to .egg-info directory. Closes: #671249.
+  * Switch from python-support to dh_python2.
+  * debian/watch: fix regex to not match pyasn1-modules.
+  * debian/copyright: switch to machine-readable format.
+  * debian/control:
+    + Add doc-base to Suggests.
+    + Bump Standards-Version to 3.9.3. No changes needed.
+    + Build-Depends on python-all rather than only python.
+
+ -- Arnaud Fontaine <arnau@debian.org>  Mon, 21 May 2012 17:45:30 +0900
 
 pyasn1 (0.0.11a-1) unstable; urgency=low
 
@@ -18,8 +55,8 @@ pyasn1 (0.0.11a-1) unstable; urgency=low
   * Added debian/python-pyasn1.doc-base.
   * debian/source:
     + Switch to dpkg-source 3.0 (quilt) format.
-   
-  [Arnaud Fontaine] 
+
+  [Arnaud Fontaine]
   * debian/control:
      + Remove myself from Maintainer as Jan Lübbe is now the maintainer.
 
@@ -33,7 +70,7 @@ pyasn1 (0.0.8a-1) unstable; urgency=low
   * Remove useless debian/control.in.
   * debian/control:
     + Update Standards-Version to 3.7.3. No changes needed.
-  
+
   [ Piotr Ożarowski ]
   * debian/control:
     + Add Vcs-Browser and Homepage fields.
@@ -73,7 +110,7 @@ pyasn1 (0.0.5a-2) unstable; urgency=low
     + debian/rules:
       - Add DEB_PYTHON_SYSTEM=pysupport.
     + debian/control.in
-      - Clean Build-Depends and Depends, cdbs handles that 
+      - Clean Build-Depends and Depends, cdbs handles that
         automatically now.
       - XB-Python-Version and Provides for binary package.
     + debian/postinst && debian/prerm:
@@ -94,7 +131,7 @@ pyasn1 (0.0.5a-1) unstable; urgency=low
 
 pyasn1 (0.0.4a-2) unstable; urgency=low
 
-  * Move Build-Depends-Indep to Build-Depends according 
+  * Move Build-Depends-Indep to Build-Depends according
     to the debian policy.
 
  -- Arnaud Fontaine <arnaud@andesi.org>  Sat, 22 Apr 2006 19:22:53 +0200
