@@ -1,3 +1,9 @@
+pyasn1 (0.0.11a-1ubuntu1pexip1) pexip; urgency=low
+
+  * Prepare Pexip packaging
+
+ -- John-Mark Bell <jmb@pexip.com>  Wed, 25 Dec 2013 02:28:36 +0000
+
 pyasn1 (0.0.11a-1ubuntu1) precise; urgency=low
 
   * Build using dh_python2

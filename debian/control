@@ -1,8 +1,9 @@
 Source: pyasn1
 Section: python
 Priority: optional
-Maintainer: Jan Lübbe <jluebbe@debian.org>
-Uploaders: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>,
+Maintainer: Pexip AS <packaging@pexip.com>
+XSBC-Pexip-Original-Maintainer: Jan Lübbe <jluebbe@debian.org>
+XSBC-Pexip-Original-Uploaders: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>,
            Deepak Tripathi <apenguinlinux@gmail.com>
 Standards-Version: 3.8.4
 Build-Depends: debhelper (>= 5.0.37.2),
@@ -12,6 +13,7 @@ Build-Depends-Indep: python-setuptools (>= 0.6b3)
 Homepage: http://pyasn1.sourceforge.net/
 Vcs-Svn: svn://svn.debian.org/python-modules/packages/pyasn1/trunk/
 Vcs-Browser: http://svn.debian.org/viewsvn/python-modules/packages/pyasn1/trunk/
+XS-Pexip-Upstream: http://archive.ubuntu.com/ubuntu/ precise
 
 Package: python-pyasn1
 Architecture: all
