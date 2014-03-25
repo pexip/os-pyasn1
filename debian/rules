@@ -8,4 +8,14 @@ include /usr/share/cdbs/1/class/python-distutils.mk
 DEB_COMPRESS_EXCLUDE := .py
 
 # Install egg-info directories
-DEB_PYTHON_INSTALL_ARGS_ALL += --single-version-externally-managed
+DEB_PYTHON_INSTALL_ARGS_ALL += --single-version-externally-managed \
+	--install-layout=deb
+
+ifeq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
+install/python-pyasn1 install/python3-pyasn1::
+	set -e; cd test; for buildver in $(cdbs_python_build_versions); do \
+        echo "I: Running pyasn1 unittests using python$$buildver"; \
+        pd=$$(/bin/ls -d $(CURDIR)/build/lib.*-$$buildver) && \
+        PYTHONPATH=$$pd $(call cdbs_python_binary,python$$buildver) suite.py; \
+    done
+endif

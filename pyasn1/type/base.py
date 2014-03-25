@@ -1,12 +1,6 @@
 # Base classes for ASN.1 types
-try:
-    from sys import version_info
-except ImportError:
-    version_info = (0, 0)   # a really early version
-from operator import getslice, setslice, delslice
-from string import join
-from types import SliceType
-from pyasn1.type import constraint
+import sys
+from pyasn1.type import constraint, tagmap
 from pyasn1 import error
 
 class Asn1Item: pass
@@ -18,6 +12,9 @@ class Asn1ItemBase(Asn1Item):
     # A list of constraint.Constraint instances for checking values
     subtypeSpec = constraint.ConstraintsIntersection()
 
+    # Used for ambiguous ASN.1 types identification
+    typeId = None
+    
     def __init__(self, tagSet=None, subtypeSpec=None):
         if tagSet is None:
             self._tagSet = self.tagSet
@@ -27,14 +24,19 @@ class Asn1ItemBase(Asn1Item):
             self._subtypeSpec = self.subtypeSpec
         else:
             self._subtypeSpec = subtypeSpec
-        
+
     def _verifySubtypeSpec(self, value, idx=None):
-        self._subtypeSpec(value, idx)
+        try:
+            self._subtypeSpec(value, idx)
+        except error.PyAsn1Error:
+            c, i, t = sys.exc_info()
+            raise c('%s at %s' % (i, self.__class__.__name__))
         
     def getSubtypeSpec(self): return self._subtypeSpec
     
     def getTagSet(self): return self._tagSet
-    def getTypeMap(self): return { self._tagSet: self }
+    def getEffectiveTagSet(self): return self._tagSet  # used by untagged types
+    def getTagMap(self): return tagmap.TagMap({self._tagSet: self})
     
     def isSameTypeWith(self, other):
         return self is other or \
@@ -48,6 +50,9 @@ class Asn1ItemBase(Asn1Item):
 class __NoValue:
     def __getattr__(self, attr):
         raise error.PyAsn1Error('No value for %s()' % attr)
+    def __getitem__(self, i):
+        raise error.PyAsn1Error('No value')
+    
 noValue = __NoValue()
 
 # Base class for "simple" ASN.1 objects. These are immutable.
@@ -64,21 +69,26 @@ class AbstractSimpleAsn1Item(Asn1ItemBase):
             self._verifySubtypeSpec(value)
             self.__hashedValue = hash(value)
         self._value = value
-
+        self._len = None
+        
     def __repr__(self):
         if self._value is noValue:
             return self.__class__.__name__ + '()'
         else:
-            return self.__class__.__name__ + '(' + repr(
-                self.prettyOut(self._value)
-                ) + ')'
+            return self.__class__.__name__ + '(%s)' % (self.prettyOut(self._value),)
     def __str__(self): return str(self._value)
-    def __cmp__(self, value): return cmp(self._value, value)
+    def __eq__(self, other):
+        return self is other and True or self._value == other
+    def __ne__(self, other): return self._value != other
+    def __lt__(self, other): return self._value < other
+    def __le__(self, other): return self._value <= other
+    def __gt__(self, other): return self._value > other
+    def __ge__(self, other): return self._value >= other
+    if sys.version_info[0] <= 2:
+        def __nonzero__(self): return bool(self._value)
+    else:
+        def __bool__(self): return bool(self._value)
     def __hash__(self): return self.__hashedValue
-
-    def __nonzero__(self):
-        if self._value: return 1
-        else: return 0
 
     def clone(self, value=None, tagSet=None, subtypeSpec=None):
         if value is None and tagSet is None and subtypeSpec is None:
@@ -110,7 +120,12 @@ class AbstractSimpleAsn1Item(Asn1ItemBase):
     def prettyIn(self, value): return value
     def prettyOut(self, value): return str(value)
 
-    def prettyPrint(self, scope=0): return self.prettyOut(self._value)
+    def prettyPrint(self, scope=0):
+        if self._value is noValue:
+            return '<no value>'
+        else:
+            return self.prettyOut(self._value)
+
     # XXX Compatibility stub
     def prettyPrinter(self, scope=0): return self.prettyPrint(scope)
     
@@ -148,20 +163,31 @@ class AbstractConstructedAsn1Item(Asn1ItemBase):
         else:
             self._sizeSpec = sizeSpec
         self._componentValues = []
+        self._componentValuesSet = 0
 
     def __repr__(self):
         r = self.__class__.__name__ + '()'
-        for idx in range(len(self)):
+        for idx in range(len(self._componentValues)):
             if self._componentValues[idx] is None:
                 continue
-            r = r + '.setComponentByPosition(%s, %s)' % (
-                idx, repr(self._componentValues[idx])
+            r = r + '.setComponentByPosition(%s, %r)' % (
+                idx, self._componentValues[idx]
                 )
         return r
 
-    def __cmp__(self, other): return cmp(self._componentValues, other)
+    def __eq__(self, other):
+        return self is other and True or self._componentValues == other
+    def __ne__(self, other): return self._componentValues != other
+    def __lt__(self, other): return self._componentValues < other
+    def __le__(self, other): return self._componentValues <= other
+    def __gt__(self, other): return self._componentValues > other
+    def __ge__(self, other): return self._componentValues >= other
+    if sys.version_info[0] <= 2:
+        def __nonzero__(self): return bool(self._componentValues)
+    else:
+        def __bool__(self): return bool(self._componentValues)
 
-    def getComponentTypeMap(self):
+    def getComponentTagMap(self):
         raise error.PyAsn1Error('Method not implemented')
 
     def _cloneComponentValues(self, myClone, cloneValueFlag): pass
@@ -206,13 +232,18 @@ class AbstractConstructedAsn1Item(Asn1ItemBase):
 
     def getComponentByPosition(self, idx):
         raise error.PyAsn1Error('Method not implemented')
-    def setComponentByPosition(self, idx, value):
+    def setComponentByPosition(self, idx, value, verifyConstraints=True):
         raise error.PyAsn1Error('Method not implemented')
 
     def getComponentType(self): return self._componentType
 
-    def __getitem__(self, idx): return self._componentValues[idx]
+    def __getitem__(self, idx): return self.getComponentByPosition(idx)
+    def __setitem__(self, idx, value): self.setComponentByPosition(idx, value)
 
     def __len__(self): return len(self._componentValues)
     
-    def clear(self): self._componentValues = []
+    def clear(self):
+        self._componentValues = []
+        self._componentValuesSet = 0
+
+    def setDefaultComponents(self): pass

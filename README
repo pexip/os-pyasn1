@@ -12,7 +12,7 @@ FEATURES
 
 * Generic implementation of ASN.1 types (X.208)
 * Fully standard compliant BER/CER/DER codecs
-* 100% Python, works with Python 1.5 and later
+* 100% Python, works with Python 2.4 up to Python 3.3 (beta 1)
 * MT-safe
 
 MISFEATURES
@@ -24,13 +24,18 @@ MISFEATURES
 INSTALLATION
 ------------
 
-The pyasn1 package uses distutils for installation:
+The pyasn1 package uses setuptools/distutils for installation. Thus do
+either:
 
-$ tar zxf pyasn1-0.0.6a.tar.gz
-$ cd pyasn1-0.0.6a
+$ easy_install pyasn1
+
+or
+
+$ tar zxf pyasn1-0.1.3.tar.gz
+$ cd pyasn1-0.1.3
 $ python setup.py install
 $ cd test
-$ python suite.py   # to make sure everything works alright
+$ python suite.py   # run unit tests
 
 OPERATION
 ---------
@@ -38,11 +43,11 @@ OPERATION
 Perhaps a typical use would involve [by-hand] compilation of your ASN.1
 specification into pyasn1-backed Python code at your application.
 
-For more information on pyasn1 APIs, please, refer to the doc/notes.html
-file in the distribution.
+For more information on pyasn1 APIs, please, refer to the 
+doc/pyasn1-tutorial.html file in the distribution.
 
-Also refer to example modules -- one of them (x509.py) handles SSL 
-certificate format.
+Also refer to example modules. Take a look at pyasn1-modules package -- maybe
+it already holds something useful to you.
 
 AVAILABILITY
 ------------

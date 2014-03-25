@@ -1,18 +1,17 @@
-"""
-   ASN.1 subtype constraints classes.
-
-   Constraints are relatively rare, but every ASN1 object
-   is doing checks all the time for whether they have any
-   constraints and whether they are applicable to the object.
-
-   What we're going to do is define objects/functions that
-   can be called unconditionally if they are present, and that
-   are simply not present if there are no constraints.
-
-   Original concept and code by Mike C. Fletcher.
-"""
-import types
-import string
+#
+#   ASN.1 subtype constraints classes.
+#
+#   Constraints are relatively rare, but every ASN1 object
+#   is doing checks all the time for whether they have any
+#   constraints and whether they are applicable to the object.
+#
+#   What we're going to do is define objects/functions that
+#   can be called unconditionally if they are present, and that
+#   are simply not present if there are no constraints.
+#
+#   Original concept and code by Mike C. Fletcher.
+#
+import sys
 from pyasn1.type import error
 
 class AbstractConstraint:
@@ -28,28 +27,32 @@ class AbstractConstraint:
     def __call__(self, value, idx=None):
         try:
             self._testValue(value, idx)
-        except error.ValueConstraintError, why:
-            raise error.ValueConstraintError('%s failed at: %s' % (
-                self, why
-                ))
+        except error.ValueConstraintError:
+            raise error.ValueConstraintError(
+               '%s failed at: \"%s\"' % (self, sys.exc_info()[1])
+            )
     def __repr__(self):
         return '%s(%s)' % (
             self.__class__.__name__,
-            string.join(map(lambda x: str(x), self._values), ', ')
+            ', '.join([repr(x) for x in self._values])
         )
-    # __cmp__ must accompany __hash__
-    def __cmp__(self, other):
-        return self is other and 0 or cmp(
-            (self.__class__, self._values), other
-            )
     def __eq__(self, other):
-        return self is other or not cmp(
-            (self.__class__, self._values), other
-            )
+        return self is other and True or self._values == other
+    def __ne__(self, other): return self._values != other
+    def __lt__(self, other): return self._values < other
+    def __le__(self, other): return self._values <= other
+    def __gt__(self, other): return self._values > other
+    def __ge__(self, other): return self._values >= other
+    if sys.version_info[0] <= 2:
+        def __nonzero__(self): return bool(self._values)
+    else:
+        def __bool__(self): return bool(self._values)
+
     def __hash__(self):
         if self.__hashedValues is None:
-            self.__hashedValues = hash((self.__class__, self._values))
+            self.__hashedValues = hash((self.__class__.__name__, self._values))
         return self.__hashedValues
+
     def _setValues(self, values): self._values = values
     def _testValue(self, value, idx):
         raise error.ValueConstraintError(value)
@@ -57,10 +60,10 @@ class AbstractConstraint:
     # Constraints derivation logic
     def getValueMap(self): return self._valueMap
     def isSuperTypeOf(self, otherConstraint):
-        return otherConstraint.getValueMap().has_key(self) or \
+        return self in otherConstraint.getValueMap() or \
                otherConstraint is self or otherConstraint == self
     def isSubTypeOf(self, otherConstraint):
-        return self._valueMap.has_key(otherConstraint) or \
+        return otherConstraint in self._valueMap or \
                otherConstraint is self or otherConstraint == self
 
 class SingleValueConstraint(AbstractConstraint):
@@ -104,7 +107,16 @@ class ValueSizeConstraint(ValueRangeConstraint):
         if l < self.start or l > self.stop:
             raise error.ValueConstraintError(value)
 
-class PermittedAlphabetConstraint(SingleValueConstraint): pass
+class PermittedAlphabetConstraint(SingleValueConstraint):
+    def _setValues(self, values):
+        self._values = ()
+        for v in values:
+            self._values = self._values + tuple(v)
+
+    def _testValue(self, value, idx):
+        for v in value:
+            if v not in self._values:
+                raise error.ValueConstraintError(value)
 
 # This is a bit kludgy, meaning two op modes within a single constraing
 class InnerTypeConstraint(AbstractConstraint):
@@ -113,7 +125,7 @@ class InnerTypeConstraint(AbstractConstraint):
         if self.__singleTypeConstraint:
             self.__singleTypeConstraint(value)
         elif self.__multipleTypeConstraint:
-            if not self.__multipleTypeConstraint.has_key(idx):
+            if idx not in self.__multipleTypeConstraint:
                 raise error.ValueConstraintError(value)
             constraint, status = self.__multipleTypeConstraint[idx]
             if status == 'ABSENT':   # XXX presense is not checked!
@@ -124,7 +136,7 @@ class InnerTypeConstraint(AbstractConstraint):
         self.__multipleTypeConstraint = {}
         self.__singleTypeConstraint = None
         for v in values:
-            if type(v) == types.TupleType:
+            if isinstance(v, tuple):
                 self.__multipleTypeConstraint[v[0]] = v[1], v[2]
             else:
                 self.__singleTypeConstraint = v
@@ -181,7 +193,7 @@ class ConstraintsUnion(AbstractConstraintSet):
             else:
                 return
         raise error.ValueConstraintError(
-            'all of %s failed for %s' % (self._values, value)
+            'all of %s failed for \"%s\"' % (self._values, value)
             )
 
 # XXX

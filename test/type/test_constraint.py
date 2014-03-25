@@ -1,11 +1,14 @@
 from pyasn1.type import constraint, error
 from pyasn1.error import PyAsn1Error
-try:
+from sys import version_info
+if version_info[0:2] < (2, 7) or \
+   version_info[0:2] in ( (3, 0), (3, 1) ):
+    try:
+        import unittest2 as unittest
+    except ImportError:
+        import unittest
+else:
     import unittest
-except ImportError:
-    raise PyAsn1Error(
-        'PyUnit package\'s missing. See http://pyunit.sourceforge.net/'
-        )
 
 class SingleValueConstraintTestCase(unittest.TestCase):
     def setUp(self):
@@ -81,14 +84,18 @@ class ValueSizeConstraintTestCase(unittest.TestCase):
             assert 0, 'constraint check fails'
 
 class PermittedAlphabetConstraintTestCase(SingleValueConstraintTestCase):
+    def setUp(self):
+        self.c1 = constraint.PermittedAlphabetConstraint('A', 'B', 'C')
+        self.c2 = constraint.PermittedAlphabetConstraint('DEF')
+
     def testGoodVal(self):
         try:
-            self.c1(1)
+            self.c1('A')
         except error.ValueConstraintError:
             assert 0, 'constraint check fails'
     def testBadVal(self):
         try:
-            self.c1(4)
+            self.c1('E')
         except error.ValueConstraintError:
             pass
         else:

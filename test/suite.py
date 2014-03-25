@@ -1,21 +1,23 @@
+from sys import path, version_info
+from os.path import sep
+path.insert(1, path[0]+sep+'type')
 import type.suite
-import codec.ber.suite
-import codec.cer.suite
-import codec.der.suite
+path.insert(1, path[0]+sep+'codec')
+import codec.suite
 from pyasn1.error import PyAsn1Error
-try:
+if version_info[0:2] < (2, 7) or \
+   version_info[0:2] in ( (3, 0), (3, 1) ):
+    try:
+        import unittest2 as unittest
+    except ImportError:
+        import unittest
+else:
     import unittest
-except ImportError:
-    raise PyAsn1Error(
-        'PyUnit package\'s missing. See http://pyunit.sourceforge.net/'
-        )
 
 suite = unittest.TestSuite()
 for m in (
     type.suite,
-    codec.ber.suite,
-    codec.cer.suite,
-    codec.der.suite
+    codec.suite
     ):
     suite.addTest(getattr(m, 'suite'))
 
