@@ -4,18 +4,52 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/python-distutils.mk
 
-# Don't compress .py files
-DEB_COMPRESS_EXCLUDE := .py
+# pypy binary package
+pypy_package = pypy-pyasn1
 
 # Install egg-info directories
 DEB_PYTHON_INSTALL_ARGS_ALL += --single-version-externally-managed \
 	--install-layout=deb
 
+# hook pypy-pyasn1 into existing cdbs build stage
+build/$(pypy_package):: build/%: debian/python-module-stampdir/%
+debian/python-module-stampdir/$(pypy_package):
+	cd $(cdbs_python_distutils_srcdir) && \
+		pypy $(cdbs_python_setup_cmd) build \
+		$(cdbs_python_build_args)
+	touch $@
+
+# hook pypy-pyasn1 into existing cdbs install stage
+install/$(pypy_package)::
+	cd $(cdbs_python_distutils_srcdir) && \
+		pypy $(cdbs_python_setup_cmd) install \
+		--root="$(cdbs_python_destdir)" \
+		--install-purelib=$(call cdbs_expand_python_distutils_installdir,pypy) \
+		$(cdbs_python_install_args)
+
+# hook in binary-post-install to invoke dh_pypy to calculate
+# dependencies, add maintainer script and byte compile files.
+binary-post-install/$(pypy_package):: binary-post-install/%: binary-install-python/%
+binary-install-python/$(pypy_package):: binary-install-python/%: binary-install/%
+	dh_pypy -p$(cdbs_curpkg) $(call cdbs_expand_curvar,DEB_DH_PYTHONHELPER_ARGS) $(call cdbs_expand_curvar, DEB_PYTHON_PRIVATE_MODULE_DIRS)
+
+python-module-clean/$(pypy_package)::
+	-cd $(cdbs_python_distutils_srcdir) && \
+		pypy $(cdbs_python_setup_cmd) clean \
+		$(cdbs_python_clean_args)
+
 ifeq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
 install/python-pyasn1 install/python3-pyasn1::
-	set -e; cd test; for buildver in $(cdbs_python_build_versions); do \
+	set -e; cd test; for buildver in $(cdbs_curpythonbuildversions); do \
         echo "I: Running pyasn1 unittests using python$$buildver"; \
-        pd=$$(/bin/ls -d $(CURDIR)/build/lib.*-$$buildver) && \
+        pd=$$(/bin/ls -d $(CURDIR)/build/$(if $(filter $(cdbs_curpythonstem),3),lib,lib.*-$$buildver)) && \
         PYTHONPATH=$$pd $(call cdbs_python_binary,python$$buildver) suite.py; \
+    done
+
+install/pypy-pyasn1::
+	set -e; cd test; \
+        echo "I: Running pyasn1 unittests using pypy"; \
+        pd=$$(/bin/ls -d $(CURDIR)/build/lib) && \
+        PYTHONPATH=$$pd pypy suite.py; \
     done
 endif

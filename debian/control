@@ -4,11 +4,15 @@ Priority: optional
 Maintainer: Pexip AS <packaging@pexip.com>
 XSBC-Pexip-Original-Maintainer: Jan Lübbe <jluebbe@debian.org>
 XSBC-Pexip-Original-Uploaders: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>,
-           Deepak Tripathi <apenguinlinux@gmail.com>, Vincent Bernat <bernat@debian.org>
-Standards-Version: 3.9.4
-Build-Depends: debhelper (>= 5.0.37.2),
-               cdbs (>= 0.4.90~),
-               python-all (>= 2.6.6-3~), python3-all
+           Deepak Tripathi <apenguinlinux@gmail.com>,
+           Vincent Bernat <bernat@debian.org>,
+           Tristan Seligmann <mithrandi@debian.org>
+Standards-Version: 3.9.6
+Build-Depends: cdbs (>= 0.4.90~),
+               debhelper (>= 9),
+               dh-python,
+               python-all (>= 2.6.6-3~),
+               python3-all
 Build-Depends-Indep: python-setuptools, python3-setuptools
 X-Python-Version: >= 2.4
 Homepage: http://pyasn1.sourceforge.net/
@@ -18,7 +22,7 @@ XS-Pexip-Upstream: http://ftp.debian.org/debian/ jessie-backports
 
 Package: python-pyasn1
 Architecture: all
-Depends: ${python:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${python:Depends}
 Suggests: doc-base
 Description: ASN.1 library for Python (Python 2 module)
  This  is  an implementation  of  ASN.1  types  and codecs  in  Python
@@ -30,7 +34,7 @@ Description: ASN.1 library for Python (Python 2 module)
 
 Package: python3-pyasn1
 Architecture: all
-Depends: ${python:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${python3:Depends}
 Suggests: doc-base
 Description: ASN.1 library for Python (Python 3 module)
  This  is  an implementation  of  ASN.1  types  and codecs  in  Python
