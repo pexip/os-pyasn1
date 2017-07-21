@@ -14,7 +14,7 @@ X-Python-Version: >= 2.4
 Homepage: http://pyasn1.sourceforge.net/
 Vcs-Svn: svn://anonscm.debian.org/python-modules/packages/pyasn1/trunk/
 Vcs-Browser: http://anonscm.debian.org/viewvc/python-modules/packages/pyasn1/trunk/
-XS-Pexip-Upstream: http://ftp.debian.org/debian/ jessie
+XS-Pexip-Upstream: http://ftp.debian.org/debian/ jessie-backports
 
 Package: python-pyasn1
 Architecture: all
