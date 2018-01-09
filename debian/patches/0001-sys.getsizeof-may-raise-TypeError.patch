@@ -1,0 +1,29 @@
+From: Vincent Bernat <vincent@bernat.im>
+Date: Tue, 26 Dec 2017 07:27:57 +0100
+Subject: sys.getsizeof() may raise TypeError
+
+Not all implementations have to implement getsizeof() and may raise
+TypeError instead. Notably, Pypy will always raise TypeError (unless a
+default value is provided).
+---
+ tests/type/test_univ.py | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/tests/type/test_univ.py b/tests/type/test_univ.py
+index 1999706..dc7d2cc 100644
+--- a/tests/type/test_univ.py
++++ b/tests/type/test_univ.py
+@@ -149,9 +149,13 @@ class NoValueTestCase(BaseTestCase):
+         try:
+             if hasattr(sys, 'getsizeof'):
+                 sys.getsizeof(univ.noValue)
++            else:
++                raise unittest.SkipTest("no sys.getsizeof() method")
+ 
+         except PyAsn1Error:
+             assert False, 'sizeof failed for NoValue object'
++        except TypeError:
++            raise unittest.SkipTest("sys.getsizeof() raises TypeError")
+ 
+ 
+ class IntegerTestCase(BaseTestCase):
