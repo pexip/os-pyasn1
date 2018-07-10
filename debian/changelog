@@ -1,15 +1,19 @@
+pyasn1 (0.1.9-2) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * Fixed VCS URL (https)
+
+  [ Vincent Bernat ]
+  * Switch to pybuild for build. It's far easier to get proper pypy
+    support this way.  This happens to closes: #837025 (FTBFS).
+
+ -- Vincent Bernat <bernat@debian.org>  Sat, 10 Sep 2016 14:22:55 +0200
+
 pyasn1 (0.1.9-1~bpo8+1pexip1) pexip; urgency=low
 
   * Migrate to jessie-backports
 
  -- John-Mark Bell <jmb@pexip.com>  Fri, 21 Jul 2017 19:51:32 +0100
-
-pyasn1 (0.1.9-1~bpo8+1) jessie-backports; urgency=medium
-
-  * Rebuild for jessie-backports.
-  * Drop pypy-pyasn1 package, requires pypy-setuptools.
-
- -- Felix Geyer <fgeyer@debian.org>  Mon, 07 Dec 2015 19:52:02 +0100
 
 pyasn1 (0.1.9-1) unstable; urgency=medium
 
