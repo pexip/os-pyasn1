@@ -1,3 +1,32 @@
+pyasn1 (0.4.2-3) unstable; urgency=medium
+
+  * Add Replaces/Breaks for python-pyasn1-doc (closes: #886700).
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Tue, 09 Jan 2018 12:40:05 +0200
+
+pyasn1 (0.4.2-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Vincent Bernat <bernat@debian.org>  Sun, 31 Dec 2017 14:45:40 +0100
+
+pyasn1 (0.4.2-1) experimental; urgency=medium
+
+  [ Tristan Seligmann ]
+  * Switch debian/watch to pypi.debian.net; releases are no longer being
+    made on the SourceForge project (closes: #855896).
+
+  [ Vincent Bernat ]
+  * New upstream release. Closes: #872724.
+  * d/patches: fix test using sys.getsizeof().
+  * d/patches: fix privacy breaches.
+  * d/control: bump Standards-Version.
+  * d/control: add documentation package.
+  * d/control: add test suite.
+  * d/control: mention this version breaks python-pysnmp4.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 26 Dec 2017 07:24:19 +0100
+
 pyasn1 (0.1.9-2pexip2) pexip; urgency=medium
 
   * Python3
