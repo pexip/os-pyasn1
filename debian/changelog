@@ -1,3 +1,9 @@
+pyasn1 (0.4.2-3pexip1) pexip; urgency=medium
+
+  * Migrate to Buster
+
+ -- Vincent Sanders <vince@pexip.com>  Sat, 29 Feb 2020 22:06:21 +0000
+
 pyasn1 (0.4.2-3) unstable; urgency=medium
 
   * Add Replaces/Breaks for python-pyasn1-doc (closes: #886700).
