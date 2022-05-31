@@ -20,7 +20,7 @@ Homepage: http://pyasn1.sourceforge.net/
 Vcs-Git: https://anonscm.debian.org/git/python-modules/packages/pyasn1.git
 Vcs-Browser: https://anonscm.debian.org/cgit/python-modules/packages/pyasn1.git
 Testsuite: autopkgtest-pkg-python
-XS-Pexip-Upstream: http://ftp.debian.org/debian/ buster
+XS-Pexip-Upstream: http://deb.debian.org/debian/ bullseye
 
 Package: python-pyasn1
 Architecture: all
