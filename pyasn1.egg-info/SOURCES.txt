@@ -6,6 +6,7 @@ TODO.rst
 setup.cfg
 setup.py
 docs/Makefile
+docs/tutorial.rst
 docs/source/changelog.rst
 docs/source/conf.py
 docs/source/contents.rst
@@ -18,6 +19,12 @@ docs/source/pyasn1/codec/ber/contents.rst
 docs/source/pyasn1/codec/cer/contents.rst
 docs/source/pyasn1/codec/der/contents.rst
 docs/source/pyasn1/codec/native/contents.rst
+docs/source/pyasn1/error/contents.rst
+docs/source/pyasn1/type/base/asn1type.rst
+docs/source/pyasn1/type/base/constructedasn1type.rst
+docs/source/pyasn1/type/base/contents.rst
+docs/source/pyasn1/type/base/novalue.rst
+docs/source/pyasn1/type/base/simpleasn1type.rst
 docs/source/pyasn1/type/char/bmpstring.rst
 docs/source/pyasn1/type/char/contents.rst
 docs/source/pyasn1/type/char/generalstring.rst
@@ -41,6 +48,7 @@ docs/source/pyasn1/type/constraint/permittedalphabet.rst
 docs/source/pyasn1/type/constraint/singlevalue.rst
 docs/source/pyasn1/type/constraint/valuerange.rst
 docs/source/pyasn1/type/constraint/valuesize.rst
+docs/source/pyasn1/type/constraint/withcomponents.rst
 docs/source/pyasn1/type/namedtype/contents.rst
 docs/source/pyasn1/type/namedtype/defaultednamedtype.rst
 docs/source/pyasn1/type/namedtype/namedtype.rst
