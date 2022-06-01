@@ -4,9 +4,9 @@
 export PYBUILD_NAME=pyasn1
 
 %:
-	dh $@ --with python2,python3,pypy,sphinxdoc --buildsystem=pybuild
+	dh $@ --with python3,pypy,sphinxdoc --buildsystem=pybuild
 
 override_dh_installdocs:
 	dh_installdocs
-	PYTHONPATH=. sphinx-build -N -q -E -b html docs/source/ \
+	PYTHONPATH=. python3 -m sphinx -N -q -E -b html docs/source/ \
                 debian/python-pyasn1-doc/usr/share/doc/python-pyasn1-doc/html/

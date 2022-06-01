@@ -3,36 +3,25 @@ Section: python
 Priority: optional
 Maintainer: Pexip AS <packaging@pexip.com>
 XSBC-Pexip-Original-Maintainer: Jan Lübbe <jluebbe@debian.org>
-XSBC-Pexip-Original-Uploaders: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>,
-           Deepak Tripathi <apenguinlinux@gmail.com>,
-           Vincent Bernat <bernat@debian.org>,
-           Tristan Seligmann <mithrandi@debian.org>
-Standards-Version: 4.1.2
-Build-Depends: debhelper (>= 9),
-               dh-python,
-               pypy,
-               python-all (>= 2.6.6-3~),
-               python3-all,
-               python3-sphinx
-Build-Depends-Indep: pypy-setuptools, python-setuptools, python3-setuptools
-X-Python-Version: >= 2.4
-Homepage: http://pyasn1.sourceforge.net/
-Vcs-Git: https://anonscm.debian.org/git/python-modules/packages/pyasn1.git
-Vcs-Browser: https://anonscm.debian.org/cgit/python-modules/packages/pyasn1.git
+XSBC-Pexip-Original-Uploaders:
+ Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>,
+ Deepak Tripathi <apenguinlinux@gmail.com>,
+ Vincent Bernat <bernat@debian.org>,
+ Tristan Seligmann <mithrandi@debian.org>,
+Standards-Version: 4.5.0
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-python,
+ pypy,
+ python3-all,
+ python3-sphinx,
+Build-Depends-Indep: pypy-setuptools, python3-setuptools
+Rules-Requires-Root: no
+Homepage: http://snmplabs.com/pyasn1/index.html
+Vcs-Git: https://salsa.debian.org/python-team/modules/pyasn1.git
+Vcs-Browser: https://salsa.debian.org/python-team/modules/pyasn1
 Testsuite: autopkgtest-pkg-python
 XS-Pexip-Upstream: http://deb.debian.org/debian/ bullseye
-
-Package: python-pyasn1
-Architecture: all
-Depends: ${misc:Depends}, ${python:Depends}
-Breaks: python-pysnmp4 (<< 4.3.4)
-Description: ASN.1 library for Python (Python 2 module)
- This  is  an implementation  of  ASN.1  types  and codecs  in  Python
- programming language. It has been first written to support particular
- protocol (SNMP) but then generalized  to be suitable for a wide range
- of protocols based on ASN.1 specification.
- .
- This package contains the Python 2 module.
 
 Package: python3-pyasn1
 Architecture: all
@@ -60,8 +49,9 @@ Description: ASN.1 library for Python (PyPy module)
 Package: python-pyasn1-doc
 Section: doc
 Architecture: all
-Depends: ${sphinxdoc:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}, ${sphinxdoc:Depends}
 Replaces: python-pyasn1 (<< 0.4.2-1)
+Built-Using: ${sphinxdoc:Built-Using}
 Breaks: python-pyasn1 (<< 0.4.2-1)
 Suggests: doc-base
 Description: ASN.1 library for Python (documentation)

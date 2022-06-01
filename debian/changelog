@@ -1,3 +1,36 @@
+pyasn1 (0.4.8-1) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Bump debhelper from deprecated 9 to 12.
+  * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository,
+    Repository-Browse.
+  * Fix day-of-week for changelog entry 0.0.4a-1.
+
+  [ Tristan Seligmann ]
+  * New upstream release.
+    - Drop 0001-sys.getsizeof-may-raise-TypeError.patch.
+  * Declare rootless build.
+  * Update Homepage.
+  * Bump Standards-Version to 4.5.0 (no changes).
+  * Bump debhelper-compat to 13.
+  * Apply sphinxdoc:Built-Using.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Fri, 17 Jul 2020 15:05:27 +0200
+
+pyasn1 (0.4.2-4) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * d/control: Set Vcs-* to salsa.debian.org
+  * d/copyright: Use https protocol in Format field
+  * d/control: Remove ancient X-Python-Version field
+  * Use 'python3 -m sphinx' instead of sphinx-build for building docs
+  * Use debhelper-compat instead of debian/compat.
+
+  [ Sandro Tosi ]
+  * Drop python2 support; Closes: #937386
+
+ -- Sandro Tosi <morph@debian.org>  Sat, 04 Apr 2020 20:16:11 -0400
+
 pyasn1 (0.4.2-3pexip2) pexip; urgency=medium
 
   * Rebuild in buster environment
@@ -241,4 +274,4 @@ pyasn1 (0.0.4a-1) unstable; urgency=low
 
   * Initial release. Closes: #364204.
 
- -- Arnaud Fontaine <arnaud@andesi.org>  Fri, 22 Apr 2006 08:22:12 +0200
+ -- Arnaud Fontaine <arnaud@andesi.org>  Sat, 22 Apr 2006 08:22:12 +0200
