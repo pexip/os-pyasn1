@@ -1,3 +1,40 @@
+pyasn1 (0.4.8-3) unstable; urgency=medium
+
+  * Team upload.
+  * Drop pypy from d/rules to fix FTBFS (Closes: #1026670)
+
+ -- Jochen Sprickerhof <jspricke@debian.org>  Sat, 24 Dec 2022 17:08:16 +0100
+
+pyasn1 (0.4.8-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload
+
+  [ Debian Janitor ]
+  * Remove constraints unnecessary since buster:
+    + python3-pyasn1: Drop versioned constraint on python3-pysnmp4 in Breaks.
+    + python-pyasn1-doc: Drop versioned constraint on python-pyasn1 in Replaces.
+    + python-pyasn1-doc: Drop versioned constraint on python-pyasn1 in Breaks.
+
+  [ Paul Gevers ]
+  * Stop building pypy-pyasn1 (Closes: 1022004)
+
+ -- Paul Gevers <elbrus@debian.org>  Tue, 18 Oct 2022 21:27:43 +0200
+
+pyasn1 (0.4.8-2) unstable; urgency=low
+
+  [ Debian Janitor ]
+  * Apply multi-arch hints.
+    + python-pyasn1-doc: Add Multi-Arch: foreign.
+
+  [ Ondřej Nový ]
+  * d/control: Update Vcs-* fields with new Debian Python Team Salsa
+    layout.
+
+  [ Sandro Tosi ]
+  * Use the new Debian Python Team contact name and address
+
+ -- Sandro Tosi <morph@debian.org>  Thu, 02 Jun 2022 20:57:14 -0400
+
 pyasn1 (0.4.8-1) unstable; urgency=medium
 
   [ Debian Janitor ]
