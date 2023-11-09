@@ -21,7 +21,7 @@ Homepage: http://snmplabs.com/pyasn1/index.html
 Vcs-Git: https://salsa.debian.org/python-team/modules/pyasn1.git
 Vcs-Browser: https://salsa.debian.org/python-team/modules/pyasn1
 Testsuite: autopkgtest-pkg-python
-XS-Pexip-Upstream: http://deb.debian.org/debian/ bullseye
+XS-Pexip-Upstream: http://deb.debian.org/debian/ bookworm
 
 Package: python3-pyasn1
 Architecture: all
