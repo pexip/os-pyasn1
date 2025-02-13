@@ -3,15 +3,16 @@ LICENSE.rst
 MANIFEST.in
 README.md
 TODO.rst
+pyproject.toml
 setup.cfg
 setup.py
 docs/Makefile
-docs/tutorial.rst
 docs/source/changelog.rst
 docs/source/conf.py
 docs/source/contents.rst
 docs/source/download.rst
 docs/source/example-use-case.rst
+docs/source/index.rst
 docs/source/license.rst
 docs/source/.static/logo.svg
 docs/source/pyasn1/contents.rst
@@ -90,6 +91,7 @@ pyasn1.egg-info/dependency_links.txt
 pyasn1.egg-info/top_level.txt
 pyasn1.egg-info/zip-safe
 pyasn1/codec/__init__.py
+pyasn1/codec/streaming.py
 pyasn1/codec/ber/__init__.py
 pyasn1/codec/ber/decoder.py
 pyasn1/codec/ber/encoder.py
@@ -104,12 +106,7 @@ pyasn1/codec/native/__init__.py
 pyasn1/codec/native/decoder.py
 pyasn1/codec/native/encoder.py
 pyasn1/compat/__init__.py
-pyasn1/compat/binary.py
-pyasn1/compat/calling.py
-pyasn1/compat/dateandtime.py
 pyasn1/compat/integer.py
-pyasn1/compat/octets.py
-pyasn1/compat/string.py
 pyasn1/type/__init__.py
 pyasn1/type/base.py
 pyasn1/type/char.py
@@ -128,6 +125,7 @@ tests/base.py
 tests/test_debug.py
 tests/codec/__init__.py
 tests/codec/__main__.py
+tests/codec/test_streaming.py
 tests/codec/ber/__init__.py
 tests/codec/ber/__main__.py
 tests/codec/ber/test_decoder.py
@@ -146,9 +144,6 @@ tests/codec/native/test_decoder.py
 tests/codec/native/test_encoder.py
 tests/compat/__init__.py
 tests/compat/__main__.py
-tests/compat/test_binary.py
-tests/compat/test_integer.py
-tests/compat/test_octets.py
 tests/type/__init__.py
 tests/type/__main__.py
 tests/type/test_char.py
