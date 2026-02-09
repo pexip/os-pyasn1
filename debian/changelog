@@ -1,3 +1,9 @@
+pyasn1 (0.4.8-3+pexip24u3+deb12u1) pexip; urgency=medium
+
+  * New upstream version
+
+ -- Huw Jones <huw@pexip.com>  Mon, 09 Feb 2025 10:41:43 +0000
+
 pyasn1 (0.4.8-3+deb12u1) bookworm-security; urgency=high
 
   * Non-maintainer upload by the Security Team.
